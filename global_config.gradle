@@ -1,0 +1,56 @@
+//所有工程都要用的公共配置，由各个子模块直接apply from
+android {
+	compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 25
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    packagingOptions{
+        exclude 'META-INF/MANIFEST.MF'
+        exclude 'META-INF/NOTICE.TXT'
+        exclude 'META-INF/LICENSE.TXT'
+        exclude 'META-INF/LICENSE.TXT'
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+	dexOptions {
+		javaMaxHeapSize "4g"
+        preDexLibraries = false
+    }
+
+    // lint所有选项请单独加入
+    lintOptions {
+        checkReleaseBuilds true
+        abortOnError false
+        check 'NewApi'  //新API
+        showAll true
+        textReport true
+        textOutput file("${ctripRoot}/build-outputs/lint/${project.name}_lint-report.txt")
+        xmlReport true
+        xmlOutput file("${ctripRoot}/build-outputs/lint/${project.name}_lint-report.xml")
+        htmlReport true
+        htmlOutput file("${ctripRoot}/build-outputs/lint/${project.name}_lint-report.html")
+    }
+}
+
+

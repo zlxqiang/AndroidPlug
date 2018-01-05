@@ -1,0 +1,150 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.sf.proguard:proguard-gradle:5.2.1'
+    }
+}
+
+import org.apache.tools.ant.taskdefs.condition.Os
+
+project.ext {
+    BUILD_TOOLS_VERSION = '23.0.3'
+    TARGET_SDK_VERSION = 23
+
+    sdk = [:]
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        println "sub-project-build******************************************************" + sdk.aapt + sdkDir + "------"
+        sdk.aapt = "${rootDir}/aapt_win.exe"
+        sdk.dex = "$sdkDir/build-tools/$BUILD_TOOLS_VERSION/dx.bat"
+        sdk.aidl = "$sdkDir\\build-tools\\$BUILD_TOOLS_VERSION\\aidl.exe"
+    } else if (Os.isFamily(Os.FAMILY_MAC)) {
+        sdk.aapt = "${rootDir}/aapt_mac"
+        sdk.dex = "$sdkDir/build-tools/$BUILD_TOOLS_VERSION/dx"
+    } else if (Os.isFamily(Os.FAMILY_UNIX)) {
+        sdk.aapt = "${rootDir}/aapt_linux"
+        sdk.dex = "$sdkDir/build-tools/$BUILD_TOOLS_VERSION/dx"
+    }
+    sdk.androidJar = "$sdkDir/platforms/android-$TARGET_SDK_VERSION/android.jar"
+    if (TARGET_SDK_VERSION >= 23) {
+        sdk.apacheJar = "$sdkDir/platforms/android-23/optional/org.apache.http.legacy.jar";
+    }
+}
+
+//初始化，确保必要目录都存在
+task init << {
+    new File(rootDir, 'build-outputs').mkdirs()
+
+    buildDir.mkdirs()
+
+    new File(buildDir, 'gen/r').mkdirs()
+
+    new File(buildDir, 'intermediates').mkdirs()
+
+    new File(buildDir, 'intermediates/classes').mkdirs()
+    new File(buildDir, 'intermediates/classes/release').mkdirs()
+    new File(buildDir, 'intermediates/classes-obfuscated').mkdirs()
+
+    new File(buildDir, 'intermediates/res').mkdirs()
+
+    new File(buildDir, 'intermediates/dex').mkdirs()
+
+    new File(buildDir, 'generated').mkdir()
+
+    new File(buildDir, 'generated/source').mkdir()
+
+    new File(buildDir, 'generated/source/aidl').mkdir()
+
+    new File(buildDir, 'generated/source/aidl/release').mkdir()
+}
+
+//清除build产出物
+task clean(type: Delete)<<{
+    delete buildDir
+    delete "${rootDir}/build-outputs/${apkName}-mapping.txt"
+    delete "${rootDir}/build-outputs/${apkName}.so"
+}
+
+task aaptReleasePlugin(type: Exec, dependsOn: 'init') {
+
+    inputs.file "$sdk.androidJar"
+    //  inputs.file "${rootDir}/build-outputs/demo-base-release.apk"
+    inputs.file "$projectDir/src/main/AndroidManifest.xml"
+    inputs.dir "$projectDir/src/main/res"
+    inputs.dir "$projectDir/src/main/assets"
+    //  inputs.file "${rootDir}/app/build/generated/source/r/release/com/gstd/app/R.java"
+
+    outputs.dir "$buildDir/gen/r"
+    outputs.file "$buildDir/intermediates/res/resources.zip"
+    outputs.file "$buildDir/intermediates/res/aapt-rules.txt"
+
+    workingDir buildDir
+    executable sdk.aapt
+
+    def resourceId = ''
+    def parseApkXml = (new XmlParser()).parse(new File(rootDir, 'apk_module_config.xml'))
+    parseApkXml.Module.each { module ->
+        if (module.@packageName == "${packageName}") {
+            resourceId = module.@resourceId
+            println "find packageName: " + module.@packageName + " ,resourceId:" + resourceId
+        } else {
+            println "----------------not font---------------"
+        }
+    }
+    def argv = []
+    argv << 'package'   //打包
+    argv << "-v"
+    argv << '-f' //强制覆盖已有文件
+    argv << "-I"
+    argv << "$sdk.androidJar"        //添加一个已有的固化jar包
+    //argv << '-I'
+    //argv << "${rootDir}/build-outputs/demo-base-release.apk"
+    argv << '-M'
+    argv << "$projectDir/src/main/AndroidManifest.xml"    //指定manifest文件
+    argv << '-S'
+    argv << "$projectDir/src/main/res"                    //res目录
+    argv << '-A'
+    argv << "$projectDir/src/main/assets"                 //assets目录
+    argv << '-m'        //make package directories under location specified by -J
+    argv << '-J'
+    argv << "$buildDir/generated/source/r/release/"         //哪里输出R.java定义
+    argv << '-F'
+    argv << "$buildDir/intermediates/res/resources-release.ap_"   //指定apk的输出位置
+    argv << '-G'        //-G  A file to output proguard options into.
+    argv << "$buildDir/intermediates/res/aapt-rules.txt"
+    // argv << '--debug-mode'      //manifest的application元素添加android:debuggable="true"
+    argv << '--custom-package'      //指定R.java生成的package包名
+    argv << "${packageName}"
+    argv << '-0'    //指定哪些后缀名不会被压缩
+    argv << 'apk'
+    //argv << '--public-R-path'
+    //argv << "${rootDir}/app/build/generated/source/r/release/com/gstd/app/R.java"
+    argv << '--apk-module'
+    argv << "$resourceId"
+
+    args = argv
+
+}
+
+
+task copyReleaseOutputsApk(type:Copy){
+    from ("$buildDir/outputs/apk/${project.name}-release-unsigned.apk") {
+        rename "${project.name}-release-unsigned.apk", "${apkName}.so"
+    }
+    into new File(rootDir, 'build-outputs')
+}
+
+afterEvaluate {
+    tasks.getByName('compileReleaseJavaWithJavac') {
+        it.doFirst {
+            println 'aaptReleasePlugin -------------------'
+            aaptReleasePlugin.execute()
+        }
+    }
+    tasks.getByName("assembleRelease") {
+        it.doFirst {
+            copyReleaseOutputsApk.execute();
+        }
+    }
+}
