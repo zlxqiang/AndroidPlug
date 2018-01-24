@@ -13,7 +13,7 @@ public class FilePath {
     private static String mBasePath;
 
     public void init(Context context) {
-        mBasePath = context.getFilesDir().getAbsolutePath() + File.separator + context.getPackageName();
+        mBasePath = context.getFilesDir().getAbsolutePath() + File.separator + "hotPath";
         File file=new File(mBasePath);
         if (!file.exists() || !file.isDirectory()) {
             new File(mBasePath).mkdirs();
@@ -29,13 +29,12 @@ public class FilePath {
     }
 
 
-    public static String getVersionDirPath(int version) {
-        String vertionPath = mBasePath + "/" + version;
+    public static String getVersionDirPath(String versionName,String versionCode) {
+        String vertionPath = mBasePath + "/" + versionName+"_"+versionCode;
         File file=new File(vertionPath);
         if (!file.exists() || file.isFile()) {
             new File(vertionPath).mkdirs();
         }
-
         return vertionPath;
     }
 

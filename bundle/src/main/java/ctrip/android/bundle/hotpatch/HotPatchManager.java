@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import ctrip.android.bundle.download.FilePath;
 import ctrip.android.bundle.log.Logger;
 import ctrip.android.bundle.log.LoggerFactory;
 import ctrip.android.bundle.runtime.RuntimeArgs;
@@ -30,8 +31,7 @@ public class HotPatchManager {
     }
 
     private HotPatchManager() {
-        File baseFile = RuntimeArgs.androidApplication.getFilesDir();
-        patchDir = new File(baseFile, "hotpatch");
+        patchDir = new File(FilePath.getBaseDirPath());
         sortedMap = new TreeMap(new Comparator<Integer>() {
             @Override
             public int compare(Integer lhs, Integer rhs) {
@@ -163,6 +163,9 @@ public class HotPatchManager {
 
     }
 
+    /**
+     * 遍历文件补丁
+     */
     private void initHotPatchs() {
         if (!patchDir.exists()) {
             patchDir.mkdirs();
