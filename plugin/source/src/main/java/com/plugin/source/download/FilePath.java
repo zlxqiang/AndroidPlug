@@ -1,11 +1,11 @@
-package ctrip.android.bundle.download;
+package com.plugin.source.download;
 
 import android.content.Context;
 
 import java.io.File;
 
 /**
- * Created by 72byte on 2018/1/24.
+ * Created by zzq on 2018/1/24.
  */
 
 public class FilePath {

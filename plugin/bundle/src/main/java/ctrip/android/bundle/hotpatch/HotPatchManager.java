@@ -10,10 +10,9 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import ctrip.android.bundle.download.FilePath;
+import com.plugin.source.download.FilePath;
 import ctrip.android.bundle.log.Logger;
 import ctrip.android.bundle.log.LoggerFactory;
-import ctrip.android.bundle.runtime.RuntimeArgs;
 
 /**
  * Created by yb.wang on 15/7/30.
@@ -31,7 +30,7 @@ public class HotPatchManager {
     }
 
     private HotPatchManager() {
-        patchDir = new File(FilePath.getBaseDirPath());
+      //  patchDir = new File(FilePath.getBaseDirPath());
         sortedMap = new TreeMap(new Comparator<Integer>() {
             @Override
             public int compare(Integer lhs, Integer rhs) {

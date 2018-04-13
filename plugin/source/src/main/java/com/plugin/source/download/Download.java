@@ -1,4 +1,4 @@
-package ctrip.android.bundle.download;
+package com.plugin.source.download;
 
 import android.text.TextUtils;
 
@@ -18,13 +18,14 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * Created by 72byte on 2018/1/24.
+ * Created by zzq on 2018/4/13.
  */
 
-public class DownloadManager {
+public class Download {
 
 
-    private File downLoadFile(String httpUrl,String vertionName,String fileName) {
+
+    private File downLoadFile(String httpUrl, String vertionName, String fileName) {
         if (TextUtils.isEmpty(httpUrl)) throw new IllegalArgumentException();
         File file = new File(FilePath.getBaseDirPath());
         if (!file.exists()) file.mkdirs();
@@ -93,5 +94,4 @@ public class DownloadManager {
         }
         return sslContext;
     }
-
 }
