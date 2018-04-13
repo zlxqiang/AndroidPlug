@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RujiaPlug.iml" filepath="$PROJECT_DIR$/RujiaPlug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidPlug.iml" filepath="$PROJECT_DIR$/AndroidPlug.iml" />
+      <module fileurl="file://D:\AndroidStudio\WorkSpaceThree\AndroidPlug\RujiaPlug.iml" filepath="D:\AndroidStudio\WorkSpaceThree\AndroidPlug\RujiaPlug.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\AndroidStudio\WorkSpaceThree\AndroidPlug\app\app.iml" filepath="D:\AndroidStudio\WorkSpaceThree\AndroidPlug\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bundle/bundle.iml" filepath="$PROJECT_DIR$/bundle/bundle.iml" />
+      <module fileurl="file://D:\AndroidStudio\WorkSpaceThree\AndroidPlug\bundle\bundle.iml" filepath="D:\AndroidStudio\WorkSpaceThree\AndroidPlug\bundle\bundle.iml" />
     </modules>
   </component>
 </project>
