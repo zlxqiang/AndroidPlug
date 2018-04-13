@@ -1,6 +1,9 @@
 package ctrip.android.bundle.framework;
 
 
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -11,8 +14,6 @@ import java.io.InputStream;
 
 import ctrip.android.bundle.framework.storage.Archive;
 import ctrip.android.bundle.framework.storage.BundleAchive;
-import ctrip.android.bundle.log.Logger;
-import ctrip.android.bundle.log.LoggerFactory;
 
 /**
  * Created by yb.wang on 14/12/31.

@@ -2,6 +2,9 @@ package ctrip.android.bundle.framework;
 
 import android.os.Build;
 
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -14,8 +17,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
-import ctrip.android.bundle.log.Logger;
-import ctrip.android.bundle.log.LoggerFactory;
 import ctrip.android.bundle.runtime.RuntimeArgs;
 
 

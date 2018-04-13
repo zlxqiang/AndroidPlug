@@ -1,4 +1,4 @@
-package ctrip.android.bundle.log;
+package com.plugin.log;
 
 /**
  * Created by yb.wang on 15/1/23.

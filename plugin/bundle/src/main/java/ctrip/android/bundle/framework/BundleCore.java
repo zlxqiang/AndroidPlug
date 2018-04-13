@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,8 +16,6 @@ import java.util.Properties;
 
 import ctrip.android.bundle.hack.AndroidHack;
 import ctrip.android.bundle.hack.SysHacks;
-import ctrip.android.bundle.log.Logger;
-import ctrip.android.bundle.log.LoggerFactory;
 import ctrip.android.bundle.runtime.BundleInstalledListener;
 import ctrip.android.bundle.runtime.DelegateResources;
 import ctrip.android.bundle.runtime.InstrumentationHook;

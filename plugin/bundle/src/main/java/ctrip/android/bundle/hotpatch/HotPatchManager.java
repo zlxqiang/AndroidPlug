@@ -2,6 +2,9 @@ package ctrip.android.bundle.hotpatch;
 
 import android.text.TextUtils;
 
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,9 +13,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import com.plugin.source.download.FilePath;
-import ctrip.android.bundle.log.Logger;
-import ctrip.android.bundle.log.LoggerFactory;
 
 /**
  * Created by yb.wang on 15/7/30.

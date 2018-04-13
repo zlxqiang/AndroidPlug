@@ -1,4 +1,4 @@
-package ctrip.android.bundle.log;
+package com.plugin.log;
 
 import android.util.Log;
 

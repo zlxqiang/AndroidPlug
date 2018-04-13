@@ -5,8 +5,9 @@ import android.content.ContextWrapper;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 
-import ctrip.android.bundle.log.Logger;
-import ctrip.android.bundle.log.LoggerFactory;
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
+
 
 /**
  * Created by yb.wang on 15/1/6.

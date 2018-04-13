@@ -1,6 +1,5 @@
 package com.plugin.source.db;
 
-import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,7 +20,7 @@ public class SqlitHelper {
 
     private final DBHelper mDB;
 
-    private SqlitHelper mInstance;
+    private static SqlitHelper mInstance;
 
     private Context mContext;
 
@@ -30,7 +29,7 @@ public class SqlitHelper {
         mDB = new DBHelper(context, fDBName, fVersion);
     }
 
-    public SqlitHelper getInstance(Context context) {
+    public static SqlitHelper getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new SqlitHelper(context);
         }
@@ -38,6 +37,11 @@ public class SqlitHelper {
     }
 
 
+    /**
+     * 插入操作
+     *
+     * @param filePathMolds
+     */
     public void insert(List<FilePathMold> filePathMolds) {
         SQLiteDatabase db = null;
         try {
@@ -103,15 +107,23 @@ public class SqlitHelper {
     /**
      * 更新
      */
-    public void update(List<FilePathMold> filePathMolds) {
+    public List<Integer> update(List<FilePathMold> filePathMolds) {
         SQLiteDatabase db = null;
         try {
             db = mDB.getReadableDatabase();
-            for(FilePathMold filePathMold:filePathMolds) {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(TableFilePath.enable,filePathMold.getEnable());
-                db.update(TableFilePath.tableName, contentValues,TableFilePath.id+"=?",new String[]{filePathMold.getId()+""});
+            List<Integer> ids = null;
+            if (db != null) {
+                ids = new ArrayList<>();
+                for (FilePathMold filePathMold : filePathMolds) {
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put(TableFilePath.enable, filePathMold.getEnable());
+                    int id = db.update(TableFilePath.tableName, contentValues, TableFilePath.id + "=?", new String[]{filePathMold.getId() + ""});
+                    if (id < 0) {
+                        ids.add(filePathMold.getId());
+                    }
+                }
             }
+            return ids;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -119,7 +131,47 @@ public class SqlitHelper {
                 db.close();
             }
         }
+        return null;
     }
 
 
+    /**
+     * 删除
+     * @param filePathMolds
+     * @return
+     */
+    public List<String> clear(List<FilePathMold> filePathMolds){
+        SQLiteDatabase db = null;
+        try {
+            db = mDB.getReadableDatabase();
+            List<String> paths = null;
+            if (db != null) {
+                paths = new ArrayList<>();
+                for (FilePathMold filePathMold : filePathMolds) {
+                    int id=db.delete(TableFilePath.tableName,TableFilePath.id+"=?",new String[]{filePathMold.getId()+""});
+                    if (id >0) {
+                        paths.add(filePathMold.getPath());
+                    }
+                }
+            }
+            return paths;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+        return null;
+    }
+
+    public void cancle(){
+        if(mDB!=null){
+            mDB.close();
+        }
+        if(mInstance!=null){
+            mInstance=null;
+        }
+
+    }
 }

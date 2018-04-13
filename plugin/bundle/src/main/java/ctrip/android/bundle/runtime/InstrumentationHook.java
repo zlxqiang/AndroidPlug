@@ -18,12 +18,13 @@ import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
+
 import java.util.List;
 
 import ctrip.android.bundle.framework.Framework;
 import ctrip.android.bundle.hack.SysHacks;
-import ctrip.android.bundle.log.Logger;
-import ctrip.android.bundle.log.LoggerFactory;
 import ctrip.android.bundle.util.StringUtil;
 
 

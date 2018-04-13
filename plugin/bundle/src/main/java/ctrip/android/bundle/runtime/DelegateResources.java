@@ -6,6 +6,9 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +18,6 @@ import ctrip.android.bundle.framework.BundleImpl;
 import ctrip.android.bundle.framework.Framework;
 import ctrip.android.bundle.hack.AndroidHack;
 import ctrip.android.bundle.hack.SysHacks;
-import ctrip.android.bundle.log.Logger;
-import ctrip.android.bundle.log.LoggerFactory;
 
 /**
  * Created by yb.wang on 15/1/5.
