@@ -8,8 +8,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/bundle" />
+            <option value="$PROJECT_DIR$/plugin" />
+            <option value="$PROJECT_DIR$/plugin/bundle" />
+            <option value="$PROJECT_DIR$/plugin/source" />
+            <option value="$PROJECT_DIR$/test" />
+            <option value="$PROJECT_DIR$/test/activity" />
+            <option value="$PROJECT_DIR$/test/boardcast" />
+            <option value="$PROJECT_DIR$/test/contentprovider" />
+            <option value="$PROJECT_DIR$/test/main" />
+            <option value="$PROJECT_DIR$/test/service" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

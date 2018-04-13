@@ -4,10 +4,17 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidPlug.iml" filepath="$PROJECT_DIR$/AndroidPlug.iml" />
       <module fileurl="file://D:\AndroidStudio\WorkSpaceThree\AndroidPlug\RujiaPlug.iml" filepath="D:\AndroidStudio\WorkSpaceThree\AndroidPlug\RujiaPlug.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/activity/activity.iml" filepath="$PROJECT_DIR$/test/activity/activity.iml" />
       <module fileurl="file://D:\AndroidStudio\WorkSpaceThree\AndroidPlug\app\app.iml" filepath="D:\AndroidStudio\WorkSpaceThree\AndroidPlug\app\app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bundle/bundle.iml" filepath="$PROJECT_DIR$/bundle/bundle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/boardcast/boardcast.iml" filepath="$PROJECT_DIR$/test/boardcast/boardcast.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugin/bundle/bundle.iml" filepath="$PROJECT_DIR$/plugin/bundle/bundle.iml" />
       <module fileurl="file://D:\AndroidStudio\WorkSpaceThree\AndroidPlug\bundle\bundle.iml" filepath="D:\AndroidStudio\WorkSpaceThree\AndroidPlug\bundle\bundle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/contentprovider/contentprovider.iml" filepath="$PROJECT_DIR$/test/contentprovider/contentprovider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/main/main.iml" filepath="$PROJECT_DIR$/test/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugin/plugin.iml" filepath="$PROJECT_DIR$/plugin/plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/service/service.iml" filepath="$PROJECT_DIR$/test/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugin/source/source.iml" filepath="$PROJECT_DIR$/plugin/source/source.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
     </modules>
   </component>
 </project>

@@ -1,1 +1,7 @@
-include ':app', ':bundle'
+include ':plugin:bundle'
+include ':plugin:source'
+include ':test:main'
+include ':test:activity'
+include ':test:boardcast'
+include ':test:service'
+include ':test:contentprovider'
