@@ -1,14 +1,13 @@
 package com.plugin.source.network;
 
-import com.plugin.source.db.FilePathMold;
-
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by admin on 2018/4/13.
  */
 
-public class ServerMolde {
+public class ServerMolde implements Serializable{
 
     private int code;
 
@@ -41,7 +40,7 @@ public class ServerMolde {
         this.data = data;
     }
 
-    public class PluginMolde{
+    public class PluginMolde implements Serializable{
 
        private String _id;
 

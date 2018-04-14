@@ -1,7 +1,9 @@
 package com.plugin.source;
 
 import android.app.Application;
+import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.plugin.log.Logger;
@@ -12,6 +14,7 @@ import com.plugin.source.network.Network;
 import com.plugin.source.network.NetworkCallback;
 import com.plugin.source.network.ServerMolde;
 
+import java.io.Serializable;
 import java.util.List;
 
 import okhttp3.Call;
@@ -21,7 +24,7 @@ import okhttp3.Call;
  * 管理插件的下载、删除、存储、提供调用
  */
 
-public class PluginSourceManager implements NetworkCallback<ServerMolde> {
+public class PluginSourceManager extends NetworkCallback<ServerMolde> {
 
     private final List<FilePathMold> mPath;
 
@@ -47,7 +50,7 @@ public class PluginSourceManager implements NetworkCallback<ServerMolde> {
         mContext = context;
         mPath = SqlitHelper.getInstance(context).queryPath();
         String param = new Gson().toJson(mPath);
-        new Network().checkServer(Url, "5ace1ace5078f3073857521f",param, this);
+        Network.getInstance().checkServer(Url, "5ace1ace5078f3073857521f",param, this);
     }
 
     public List<FilePathMold> getPluginPath() {
@@ -67,5 +70,11 @@ public class PluginSourceManager implements NetworkCallback<ServerMolde> {
     @Override
     public void onSuccess(Call call, ServerMolde serverMolde) {
         log.log(new Gson().toJson(serverMolde), Logger.LogLevel.ERROR);
+        if(serverMolde!=null && serverMolde.getData()!=null){
+            List<ServerMolde.PluginMolde> datas = serverMolde.getData();
+            Intent intent = new Intent(mContext, DownloadManager.class);
+            intent.putExtra("values", (Serializable) datas);
+            mContext.startService(intent);
+        }
     }
 }

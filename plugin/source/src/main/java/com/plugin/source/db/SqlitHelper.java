@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
+import com.plugin.source.network.ServerMolde;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,11 @@ public class SqlitHelper {
 
     private Context mContext;
 
+    private static final Logger log;
+
+    static {
+        log= LoggerFactory.getLogcatLogger("DownloadServicer");
+    }
 
     private SqlitHelper(Context context) {
         mDB = new DBHelper(context, fDBName, fVersion);
@@ -57,6 +66,36 @@ public class SqlitHelper {
                 db.insert(TableFilePath.tableName, null, contentValues);
             }
             db.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (db != null) {
+                db.endTransaction();
+                db.close();
+            }
+        }
+    }
+
+
+    /**
+     * 插入操作
+     *
+     * @param filePathMolds
+     */
+    public void insert(ServerMolde.PluginMolde filePathMolds,String path) {
+        SQLiteDatabase db = null;
+        try {
+            db = mDB.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(TableFilePath.code, filePathMolds.getFile_md5());
+            contentValues.put(TableFilePath.path, path);
+            contentValues.put(TableFilePath.version, filePathMolds.getVersion());
+            contentValues.put(TableFilePath.enable, "1");
+            long id=db.insert(TableFilePath.tableName, null, contentValues);
+            if(id>0){
+                log.log("插入成功", Logger.LogLevel.ERROR);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -137,10 +176,11 @@ public class SqlitHelper {
 
     /**
      * 删除
+     *
      * @param filePathMolds
      * @return
      */
-    public List<String> clear(List<FilePathMold> filePathMolds){
+    public List<String> clear(List<FilePathMold> filePathMolds) {
         SQLiteDatabase db = null;
         try {
             db = mDB.getReadableDatabase();
@@ -148,8 +188,8 @@ public class SqlitHelper {
             if (db != null) {
                 paths = new ArrayList<>();
                 for (FilePathMold filePathMold : filePathMolds) {
-                    int id=db.delete(TableFilePath.tableName,TableFilePath.id+"=?",new String[]{filePathMold.getId()+""});
-                    if (id >0) {
+                    int id = db.delete(TableFilePath.tableName, TableFilePath.id + "=?", new String[]{filePathMold.getId() + ""});
+                    if (id > 0) {
                         paths.add(filePathMold.getPath());
                     }
                 }
@@ -165,12 +205,12 @@ public class SqlitHelper {
         return null;
     }
 
-    public void cancle(){
-        if(mDB!=null){
+    public void cancle() {
+        if (mDB != null) {
             mDB.close();
         }
-        if(mInstance!=null){
-            mInstance=null;
+        if (mInstance != null) {
+            mInstance = null;
         }
 
     }

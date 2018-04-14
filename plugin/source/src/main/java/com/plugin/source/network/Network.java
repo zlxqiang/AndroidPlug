@@ -1,9 +1,9 @@
 package com.plugin.source.network;
 
-import android.net.ConnectivityManager;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -27,15 +27,25 @@ public class Network {
 
     private OkHttpClient mClient;
 
-    public Network() {
+    private static Network mNetwork;
+
+    private Network() {
         mClient=new OkHttpClient.Builder().writeTimeout(1000*60, TimeUnit.MILLISECONDS).build();
     }
+
 
     public Network(OkHttpClient client) {
         mClient=client;
     }
 
-   public void checkServer(String url,String key, String json, final NetworkCallback callback){
+    public static Network getInstance(){
+        if(mNetwork==null){
+            mNetwork=new Network();
+        }
+        return mNetwork;
+    }
+
+   public void checkServer(String url,String key, String json, NetworkCallback callback){
        FormBody.Builder formBody = new FormBody.Builder();//创建表单请求体
        formBody.add("key",key);//传递键值对参数
        formBody.add("params",json);
@@ -43,27 +53,17 @@ public class Network {
                .url(url)
                .post(formBody.build())
                .build();
-       mClient.newCall(request).enqueue(new Callback() {
-           @Override
-           public void onFailure(Call call, IOException e) {
-               if(callback!=null){
-                   callback.onFailure(e.getMessage());
-               }
-           }
-
-           @Override
-           public void onResponse(Call call, Response response) throws IOException {
-                if(response.code()== 200){
-                    if(callback!=null){
-                        ParameterizedType parameterizedType = (ParameterizedType) callback.getClass().getGenericInterfaces()[0];
-                       Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-                        String json=response.body().string();
-                        Object obj = new Gson().fromJson(json, actualTypeArguments[0]);
-                        callback.onSuccess(call,obj);
-                    }
-                }
-           }
-       });
+       mClient.newCall(request).enqueue(callback);
    }
+
+
+   public void fileDownload(String url,DownloadCallBack downloadCallback){
+       Request request=new Request.Builder().url(url).build();
+       mClient.newCall(request).enqueue(downloadCallback);
+       downloadCallback.startDownload();
+   }
+
+
+
 
 }

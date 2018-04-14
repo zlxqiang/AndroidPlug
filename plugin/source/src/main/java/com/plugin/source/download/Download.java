@@ -25,11 +25,11 @@ public class Download {
 
 
 
-    private File downLoadFile(String httpUrl, String vertionName, String fileName) {
+    private File downLoadFile(String httpUrl, File file) {
         if (TextUtils.isEmpty(httpUrl)) throw new IllegalArgumentException();
-        File file = new File(FilePath.getBaseDirPath());
-        if (!file.exists()) file.mkdirs();
-        file = new File(""+ File.separator + fileName);
+        if (!file.exists()){
+            file.mkdirs();
+        }
         InputStream inputStream = null;
         FileOutputStream outputStream = null;
         HttpURLConnection connection = null;
