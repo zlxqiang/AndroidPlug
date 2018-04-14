@@ -10,7 +10,7 @@ public class LoggerFactory {
     public static Logger.LogLevel minLevel;
 
     static {
-        isNeedLog = false;
+        isNeedLog = true;
         minLevel = Logger.LogLevel.DBUG;
     }
 

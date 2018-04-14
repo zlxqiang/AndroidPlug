@@ -45,6 +45,6 @@ public class TableFilePath implements SqlString {
                 +code+" VARCHAR(50),"
                 +path+" VARCHAR(50),"
                 +version+" INTEGER,"
-                +enable+" INTEGER))";
+                +enable+" INTEGER)";
     }
 }

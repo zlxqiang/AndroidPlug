@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
 import com.plugin.source.db.FilePathMold;
 import com.plugin.source.db.SqlitHelper;
 import com.plugin.source.network.Network;
@@ -11,7 +13,9 @@ import com.plugin.source.network.NetworkCallback;
 import com.plugin.source.network.ServerMolde;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -26,7 +30,7 @@ public class PluginSourceManager implements NetworkCallback<ServerMolde> {
 
     private final List<FilePathMold> mPath;
 
-    private final String Url = "https://192.168.1.101:3000";
+    private final String Url = "http://192.168.1.101:3000/project/query";
     //网络权限
     //获取本次启动可以资源路径
     //1.网络请求，是否有资源要更新
@@ -36,11 +40,19 @@ public class PluginSourceManager implements NetworkCallback<ServerMolde> {
     private Context mContext;
 
 
+    private static final Logger log;
+
+
+    static {
+        log=LoggerFactory.getLogcatLogger("PluginSourceManager");
+    }
+
+
     public PluginSourceManager(Context context) {
         mContext = context;
         mPath = SqlitHelper.getInstance(context).queryPath();
         String param = new Gson().toJson(mPath);
-        new Network().checkServer(Url, param, this);
+        new Network().checkServer(Url, "5ace1ace5078f3073857521f",param, this);
     }
 
     public List<FilePathMold> getPluginPath() {
@@ -49,16 +61,16 @@ public class PluginSourceManager implements NetworkCallback<ServerMolde> {
 
     @Override
     public void onFailure(String msg) {
-
+        log.log(msg, Logger.LogLevel.ERROR);
     }
 
     @Override
     public void onNetwortError(int code, String e) {
-
+        log.log(e, Logger.LogLevel.ERROR);
     }
 
     @Override
     public void onSuccess(Call call, ServerMolde serverMolde) {
-
+        log.log(new Gson().toJson(serverMolde), Logger.LogLevel.ERROR);
     }
 }

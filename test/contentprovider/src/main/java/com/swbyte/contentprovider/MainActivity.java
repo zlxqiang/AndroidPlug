@@ -1,4 +1,4 @@
-package com.swbyte.main;
+package com.swbyte.contentprovider;
 
 import android.app.Activity;
 import android.os.Bundle;

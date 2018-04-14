@@ -1,5 +1,8 @@
 package ctrip.android.bundle.hotpatch;
 
+import com.plugin.log.Logger;
+import com.plugin.log.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,8 +12,6 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 import ctrip.android.bundle.loader.BundlePathLoader;
-import ctrip.android.bundle.log.Logger;
-import ctrip.android.bundle.log.LoggerFactory;
 import ctrip.android.bundle.runtime.RuntimeArgs;
 import ctrip.android.bundle.util.APKUtil;
 

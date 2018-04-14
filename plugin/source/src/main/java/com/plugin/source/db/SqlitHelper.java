@@ -77,7 +77,7 @@ public class SqlitHelper {
         SQLiteDatabase db = null;
         try {
             db = mDB.getReadableDatabase();
-            cursor = db.query(TableFilePath.tableName, new String[]{"*"}, TableFilePath.enable + "=？", new String[]{"1"}, null, null, null);
+            cursor = db.query(TableFilePath.tableName, new String[]{"*"}, TableFilePath.enable + "=?", new String[]{"1"}, null, null, null);
             if (cursor != null && cursor.getCount() > 0) {
                 List<FilePathMold> pathMolds = new ArrayList<>();
                 while (cursor.moveToNext()) {
