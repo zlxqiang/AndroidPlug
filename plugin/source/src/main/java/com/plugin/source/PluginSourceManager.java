@@ -12,14 +12,9 @@ import com.plugin.source.network.Network;
 import com.plugin.source.network.NetworkCallback;
 import com.plugin.source.network.ServerMolde;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * Created by zzq on 2018/4/13.
