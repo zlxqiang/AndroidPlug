@@ -10,6 +10,8 @@ import com.plugin.log.Logger;
 import com.plugin.log.LoggerFactory;
 import com.plugin.source.db.FilePathMold;
 import com.plugin.source.db.SqlitHelper;
+import com.plugin.source.download.DownloadServicer;
+import com.plugin.source.download.FilePath;
 import com.plugin.source.network.Network;
 import com.plugin.source.network.NetworkCallback;
 import com.plugin.source.network.ServerMolde;
@@ -28,7 +30,8 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
 
     private final List<FilePathMold> mPath;
 
-    private final String Url = "http://192.168.1.101:3000/project/query";
+    public static final String BaseUrl="http://192.168.1.101:3000/";
+    private final String Url = BaseUrl+"project/query";
     //网络权限
     //获取本次启动可以资源路径
     //1.网络请求，是否有资源要更新
@@ -48,7 +51,8 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
 
     public PluginSourceManager(Context context) {
         mContext = context;
-        mPath = SqlitHelper.getInstance(context).queryPath();
+        new FilePath().init(context);
+        mPath = SqlitHelper.getInstance(context).queryPath("0");
         String param = new Gson().toJson(mPath);
         Network.getInstance().checkServer(Url, "5ace1ace5078f3073857521f",param, this);
     }
@@ -72,8 +76,9 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
         log.log(new Gson().toJson(serverMolde), Logger.LogLevel.ERROR);
         if(serverMolde!=null && serverMolde.getData()!=null){
             List<ServerMolde.PluginMolde> datas = serverMolde.getData();
-            Intent intent = new Intent(mContext, DownloadManager.class);
+            Intent intent = new Intent(mContext, DownloadServicer.class);
             intent.putExtra("values", (Serializable) datas);
+            intent.putExtra("localValues", (Serializable) mPath);
             mContext.startService(intent);
         }
     }

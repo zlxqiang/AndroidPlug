@@ -57,7 +57,7 @@ public abstract class DownloadCallBack implements Callback {
     public void onResponse(Call call, Response response) throws IOException {
         if (response != null && mFile!=null) {
             InputStream is = response.body().byteStream();
-            FileOutputStream fos = new FileOutputStream(mFile);
+            FileOutputStream fos = new FileOutputStream(mFile.getAbsolutePath());
             int len = 0;
             long hasLoadLength=len;
             long allLength = response.body().contentLength();

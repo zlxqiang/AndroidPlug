@@ -20,7 +20,7 @@ public class SqlitHelper {
 
     private final String fDBName = "pluginDB";
 
-    private final int fVersion = 1;
+    private final int fVersion = 2;
 
     private final DBHelper mDB;
 
@@ -31,7 +31,7 @@ public class SqlitHelper {
     private static final Logger log;
 
     static {
-        log= LoggerFactory.getLogcatLogger("DownloadServicer");
+        log = LoggerFactory.getLogcatLogger("DownloadServicer");
     }
 
     private SqlitHelper(Context context) {
@@ -69,10 +69,6 @@ public class SqlitHelper {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (db != null) {
-                db.endTransaction();
-                db.close();
-            }
         }
     }
 
@@ -82,27 +78,24 @@ public class SqlitHelper {
      *
      * @param filePathMolds
      */
-    public void insert(ServerMolde.PluginMolde filePathMolds,String path) {
+    public void insert(int state,ServerMolde.PluginMolde filePathMolds, String path) {
         SQLiteDatabase db = null;
         try {
             db = mDB.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
+            contentValues.put(TableFilePath._id, filePathMolds.get_id());
             contentValues.put(TableFilePath.code, filePathMolds.getFile_md5());
             contentValues.put(TableFilePath.path, path);
             contentValues.put(TableFilePath.version, filePathMolds.getVersion());
-            contentValues.put(TableFilePath.enable, "1");
-            long id=db.insert(TableFilePath.tableName, null, contentValues);
-            if(id>0){
+            contentValues.put(TableFilePath.enable, state);
+            long id = db.insert(TableFilePath.tableName, null, contentValues);
+            if (id > 0) {
                 log.log("插入成功", Logger.LogLevel.ERROR);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (db != null) {
-                db.endTransaction();
-                db.close();
-            }
         }
     }
 
@@ -111,21 +104,22 @@ public class SqlitHelper {
      *
      * @return
      */
-    public List<FilePathMold> queryPath() {
+    public List<FilePathMold> queryPath(String state) {
         Cursor cursor = null;
         SQLiteDatabase db = null;
         try {
             db = mDB.getReadableDatabase();
-            cursor = db.query(TableFilePath.tableName, new String[]{"*"}, TableFilePath.enable + "=?", new String[]{"1"}, null, null, null);
+            cursor = db.query(TableFilePath.tableName, new String[]{"*"}, TableFilePath.enable + "=?", new String[]{state}, null, null, null);
             if (cursor != null && cursor.getCount() > 0) {
                 List<FilePathMold> pathMolds = new ArrayList<>();
                 while (cursor.moveToNext()) {
-                    int _id = cursor.getInt(cursor.getColumnIndex(TableFilePath.id));
+                    int id = cursor.getInt(cursor.getColumnIndex(TableFilePath.id));
+                    String _id=cursor.getString(cursor.getColumnIndex(TableFilePath._id));
                     String path = cursor.getString(cursor.getColumnIndex(TableFilePath.path));
                     String code = cursor.getString(cursor.getColumnIndex(TableFilePath.code));
                     int version = cursor.getInt(cursor.getColumnIndex(TableFilePath.version));
                     int enalbe = cursor.getInt(cursor.getColumnIndex(TableFilePath.enable));
-                    pathMolds.add(new FilePathMold(_id, code, path, version, enalbe));
+                    pathMolds.add(new FilePathMold(id,_id, code, path, version, enalbe));
                 }
                 return pathMolds;
             }
@@ -135,9 +129,6 @@ public class SqlitHelper {
             if (cursor != null) {
                 cursor.close();
             }
-            if (db != null) {
-                db.close();
-            }
         }
 
         return null;
@@ -146,63 +137,38 @@ public class SqlitHelper {
     /**
      * 更新
      */
-    public List<Integer> update(List<FilePathMold> filePathMolds) {
+    public int update(int state,String md5) {
         SQLiteDatabase db = null;
         try {
             db = mDB.getReadableDatabase();
-            List<Integer> ids = null;
             if (db != null) {
-                ids = new ArrayList<>();
-                for (FilePathMold filePathMold : filePathMolds) {
-                    ContentValues contentValues = new ContentValues();
-                    contentValues.put(TableFilePath.enable, filePathMold.getEnable());
-                    int id = db.update(TableFilePath.tableName, contentValues, TableFilePath.id + "=?", new String[]{filePathMold.getId() + ""});
-                    if (id < 0) {
-                        ids.add(filePathMold.getId());
-                    }
-                }
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(TableFilePath.enable, state);
+                int id = db.update(TableFilePath.tableName, contentValues, TableFilePath.code + "=?", new String[]{md5});
+                return id;
             }
-            return ids;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (db != null) {
-                db.close();
-            }
         }
-        return null;
+        return -1;
     }
 
 
     /**
      * 删除
      *
-     * @param filePathMolds
-     * @return
      */
-    public List<String> clear(List<FilePathMold> filePathMolds) {
+    public int delet(String state) {
         SQLiteDatabase db = null;
         try {
             db = mDB.getReadableDatabase();
-            List<String> paths = null;
-            if (db != null) {
-                paths = new ArrayList<>();
-                for (FilePathMold filePathMold : filePathMolds) {
-                    int id = db.delete(TableFilePath.tableName, TableFilePath.id + "=?", new String[]{filePathMold.getId() + ""});
-                    if (id > 0) {
-                        paths.add(filePathMold.getPath());
-                    }
-                }
-            }
-            return paths;
+                    return db.delete(TableFilePath.tableName, TableFilePath.enable + "=?", new String[]{state});
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (db != null) {
-                db.close();
-            }
         }
-        return null;
+        return -1;
     }
 
     public void cancle() {
@@ -214,4 +180,5 @@ public class SqlitHelper {
         }
 
     }
+
 }

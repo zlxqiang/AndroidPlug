@@ -22,11 +22,14 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //执行建表语句
-        db.execSQL(new TableFilePath().getSql());
+        db.execSQL(TableFilePath.getSql());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+       if(newVersion>oldVersion){
+           db.execSQL("drop table if exists "+TableFilePath.tableName);
+           db.execSQL(TableFilePath.getSql());
+       }
     }
 }

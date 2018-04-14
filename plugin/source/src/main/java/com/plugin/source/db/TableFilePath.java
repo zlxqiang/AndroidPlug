@@ -4,7 +4,7 @@ package com.plugin.source.db;
  * Created by admin on 2018/4/13.
  */
 
-public class TableFilePath implements SqlString {
+public class TableFilePath {
 
     /**
      * 数据表名称
@@ -16,6 +16,7 @@ public class TableFilePath implements SqlString {
      */
     public static final String id ="id";
 
+    public static final String _id="_id";
     /**
      * 编码
      */
@@ -32,16 +33,16 @@ public class TableFilePath implements SqlString {
     public static final String version = "version";
 
     /**
-     * 是否有效 0,无效；1有效
+     * 是否有效 0,当前；1有效，2上一次，3可删除
      */
     public static final String enable="enable";
 
-    @Override
-    public String getSql() {
+    public static String getSql() {
         return "CREATE TABLE "
                 +tableName
                 +" ("
                 +id +" INTEGER PRIMARY KEY AUTOINCREMENT,"
+                +_id+" VARCHAR(50),"
                 +code+" VARCHAR(50),"
                 +path+" VARCHAR(50),"
                 +version+" INTEGER,"
