@@ -10,8 +10,8 @@ buildscript {
 import org.apache.tools.ant.taskdefs.condition.Os
 
 project.ext {
-    BUILD_TOOLS_VERSION = '23.0.3'
-    TARGET_SDK_VERSION = 23
+    BUILD_TOOLS_VERSION = '26.0.2'
+    TARGET_SDK_VERSION = 26
 
     sdk = [:]
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
@@ -60,11 +60,11 @@ task init << {
 }
 
 //清除build产出物
-task clean(type: Delete)<<{
-    delete buildDir
-    delete "${rootDir}/build-outputs/${apkName}-mapping.txt"
-    delete "${rootDir}/build-outputs/${apkName}.so"
-}
+//task clean(type: Delete)<<{
+//    delete buildDir
+//    delete "${rootDir}/build-outputs/${apkName}-mapping.txt"
+//    delete "${rootDir}/build-outputs/${apkName}.so"
+//}
 
 task aaptReleasePlugin(type: Exec, dependsOn: 'init') {
 
