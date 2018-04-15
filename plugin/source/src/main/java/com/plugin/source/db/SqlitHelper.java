@@ -51,33 +51,6 @@ public class SqlitHelper {
      *
      * @param filePathMolds
      */
-    public void insert(List<FilePathMold> filePathMolds) {
-        SQLiteDatabase db = null;
-        try {
-            db = mDB.getWritableDatabase();
-            db.beginTransaction();
-            for (FilePathMold filePathMold : filePathMolds) {
-                ContentValues contentValues = new ContentValues();
-                // contentValues.put(TableFilePath.id,);
-                contentValues.put(TableFilePath.code, filePathMold.getCode());
-                contentValues.put(TableFilePath.path, filePathMold.getPath());
-                contentValues.put(TableFilePath.version, filePathMold.getVersion());
-                contentValues.put(TableFilePath.enable, filePathMold.getEnable());
-                db.insert(TableFilePath.tableName, null, contentValues);
-            }
-            db.setTransactionSuccessful();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-        }
-    }
-
-
-    /**
-     * 插入操作
-     *
-     * @param filePathMolds
-     */
     public void insert(int state,ServerMolde.PluginMolde filePathMolds, String path) {
         SQLiteDatabase db = null;
         try {

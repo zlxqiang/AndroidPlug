@@ -13,9 +13,6 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import ctrip.android.bundle.framework.Bundle;
-import ctrip.android.bundle.framework.BundleImpl;
-import ctrip.android.bundle.framework.Framework;
 import ctrip.android.bundle.hack.AndroidHack;
 import ctrip.android.bundle.hack.SysHacks;
 
@@ -34,15 +31,12 @@ public class DelegateResources extends Resources {
         super(assets, resources.getDisplayMetrics(), resources.getConfiguration());
     }
 
-    public static void newDelegateResources(Application application, Resources resources) throws Exception {
-        List<Bundle> bundles = Framework.getBundles();
-        if (bundles != null && !bundles.isEmpty()) {
+    public static void newDelegateResources(Application application, Resources resources, List<String> resourcePaths) throws Exception {
+        if (resourcePaths != null && !resourcePaths.isEmpty()) {
             Resources delegateResources;
             List<String> arrayList = new ArrayList();
             arrayList.add(application.getApplicationInfo().sourceDir);
-            for (Bundle bundle : bundles) {
-                arrayList.add(((BundleImpl) bundle).getArchive().getArchiveFile().getAbsolutePath());
-            }
+            arrayList.addAll(resourcePaths);
             AssetManager assetManager = AssetManager.class.newInstance();
             for (String str : arrayList) {
                 SysHacks.AssetManager_addAssetPath.invoke(assetManager, str);

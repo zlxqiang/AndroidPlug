@@ -23,7 +23,6 @@ import com.plugin.log.LoggerFactory;
 
 import java.util.List;
 
-import ctrip.android.bundle.framework.Framework;
 import ctrip.android.bundle.hack.SysHacks;
 import ctrip.android.bundle.util.StringUtil;
 
@@ -153,7 +152,8 @@ public class InstrumentationHook extends Instrumentation {
                 SysHacks.ContextThemeWrapper_mResources.set(newActivity, RuntimeArgs.delegateResources);
             }
         } catch (ClassNotFoundException e) {
-            String property = Framework.getProperty("ctrip.android.bundle.welcome", "ctrip.android.view.home.CtripSplashActivity");
+            //重新打开主页
+            String property=null;// = Framework.getProperty("ctrip.android.bundle.welcome", "ctrip.android.view.home.CtripSplashActivity");
             if (StringUtil.isEmpty(property)) {
                 throw e;
             } else {

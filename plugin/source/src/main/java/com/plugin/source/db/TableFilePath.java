@@ -33,7 +33,7 @@ public class TableFilePath {
     public static final String version = "version";
 
     /**
-     * 是否有效 0,当前；1有效，2上一次，3可删除
+     * 是否有效 0,当前；1有效（保留），2上一次
      */
     public static final String enable="enable";
 

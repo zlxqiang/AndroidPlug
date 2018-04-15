@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/plugin" />
             <option value="$PROJECT_DIR$/plugin/bundle" />
+            <option value="$PROJECT_DIR$/plugin/classloader" />
             <option value="$PROJECT_DIR$/plugin/log" />
             <option value="$PROJECT_DIR$/plugin/source" />
             <option value="$PROJECT_DIR$/test" />

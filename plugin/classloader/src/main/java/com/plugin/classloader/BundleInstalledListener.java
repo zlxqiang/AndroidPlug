@@ -1,4 +1,4 @@
-package ctrip.android.bundle.runtime;
+package com.plugin.classloader;
 
 /**
  * Created by yb.wang on 15/8/7.

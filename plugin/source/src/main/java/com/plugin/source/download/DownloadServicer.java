@@ -68,20 +68,15 @@ public class DownloadServicer extends IntentService {
 
                 int index = pluginMolde.getDownload_path().lastIndexOf("/");
                 String fileName = pluginMolde.getDownload_path().substring(index);
-                File file = new File(FilePath.getBaseDirPath() + "/plugins");
-                if (!file.exists() || !file.isDirectory()) {
-                    file.mkdirs();
-
-                }
-                file = new File(FilePath.getBaseDirPath() + "/plugins", fileName);
-
+                File file = new File(FilePath.makeDBFilePath(pluginMolde.getFile_md5()),fileName);
                 if (file.exists() && file.isDirectory()) {
                     file.delete();
+                    file.getParentFile().mkdirs();
                 }
 
                 Response responce = Network.getInstance().fileDownload(PluginSourceManager.BaseUrl + pluginMolde.getDownload_path());
                 getDatas(responce, file);
-                //降级
+                //降级0-2
                 if (localDatas != null) {
                     for (FilePathMold filePathMold : localDatas) {
                         if (filePathMold.get_id().equals(pluginMolde.get_id()) && filePathMold.getVersion() < pluginMolde.getVersion()) {

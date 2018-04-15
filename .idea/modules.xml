@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/test/boardcast/boardcast.iml" filepath="$PROJECT_DIR$/test/boardcast/boardcast.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugin/bundle/bundle.iml" filepath="$PROJECT_DIR$/plugin/bundle/bundle.iml" />
       <module fileurl="file://D:\AndroidStudio\WorkSpaceThree\AndroidPlug\bundle\bundle.iml" filepath="D:\AndroidStudio\WorkSpaceThree\AndroidPlug\bundle\bundle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/plugin/classloader/classloader.iml" filepath="$PROJECT_DIR$/plugin/classloader/classloader.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/contentprovider/contentprovider.iml" filepath="$PROJECT_DIR$/test/contentprovider/contentprovider.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugin/log/log.iml" filepath="$PROJECT_DIR$/plugin/log/log.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/main/main.iml" filepath="$PROJECT_DIR$/test/main/main.iml" />

@@ -1,4 +1,4 @@
-package ctrip.android.bundle.loader;
+package com.plugin.classloader.loader;
 
 import android.os.Build;
 import android.util.Log;
@@ -140,13 +140,18 @@ public class BundlePathLoader {
             IllegalAccessException {
         synchronized (BundlePathLoader.class) {
             Field jlrField = findField(instance, fieldName);
+            //之前的Element
             Object[] original = (Object[]) jlrField.get(instance);
+            //新数组，之前的dex文件个数+新增的dex个数
             Object[] combined = (Object[]) Array.newInstance(
                     original.getClass().getComponentType(), original.length + extraElements.length);
+
             if(isHotFix) {
+                //新增的+之前的
                 System.arraycopy(extraElements, 0, combined, 0, extraElements.length);
                 System.arraycopy(original, 0, combined, extraElements.length, original.length);
             }else {
+                //之前的+新增的
                 System.arraycopy(original, 0, combined, 0, original.length);
                 System.arraycopy(extraElements, 0, combined, original.length, extraElements.length);
             }
@@ -162,13 +167,23 @@ public class BundlePathLoader {
                 throws IllegalArgumentException, IllegalAccessException,
                 NoSuchFieldException, InvocationTargetException, NoSuchMethodException, InstantiationException {
 
+            //BaseDexClassLoader 的成员变量DexPathList pathList
             Field pathListField = findField(loader, "pathList");
             Object dexPathList = pathListField.get(loader);
+
+            //DexPathList的成员变量Element[] dexElements
             Field dexElement = findField(dexPathList, "dexElements");
+            //Element类型
             Class<?> elementType = dexElement.getType().getComponentType();
+
+            //DexPathList的成员函数loadDexFile
             Method loadDex = findMethod(dexPathList, "loadDexFile", File.class, File.class);
+
+            //File->dex,odex存放路径
             Object dex = loadDex.invoke(dexPathList, additionalClassPathEntries.get(0), optimizedDirectory);
+            //获取Element的构造方法
             Constructor<?> constructor = elementType.getConstructor(File.class, boolean.class, File.class, DexFile.class);
+            //创建Element对象
             Object element = constructor.newInstance(new File(""), false, additionalClassPathEntries.get(0), dex);
             Object[] newEles=new Object[1];
             newEles[0]=element;

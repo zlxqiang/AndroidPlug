@@ -40,7 +40,7 @@ public class ServerMolde implements Serializable{
         this.data = data;
     }
 
-    public class PluginMolde implements Serializable{
+    public static class PluginMolde implements Serializable{
 
        private String _id;
 

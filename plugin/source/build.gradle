@@ -34,4 +34,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'com.google.code.gson:gson:2.8.2'
     implementation project(':plugin:bundle')
+    implementation project(':plugin:classloader')
 }
