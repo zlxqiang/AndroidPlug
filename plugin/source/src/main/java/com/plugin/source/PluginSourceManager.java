@@ -28,6 +28,7 @@ import com.plugin.classloader.loader.BundlePathLoader;
 
 import ctrip.android.bundle.hack.AndroidHack;
 import ctrip.android.bundle.hack.SysHacks;
+import ctrip.android.bundle.runtime.DelegateResources;
 import ctrip.android.bundle.runtime.InstrumentationHook;
 import ctrip.android.bundle.runtime.RuntimeArgs;
 import ctrip.android.bundle.util.APKUtil;
@@ -66,6 +67,7 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
             mPath = SqlitHelper.getInstance(context).queryPath("0");
             if (mPath != null && mPath.size() > 0) {
                 install(mPath);
+                assertAddPath();
                 chackNetServer();
             } else {
                 //首次
@@ -123,6 +125,8 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
 
                         }
                     }
+                    // notifySyncBundleListers();
+                    assertAddPath();
                     chackNetServer();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -133,6 +137,21 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
             }
         }).start();
     }
+
+    private void assertAddPath(){
+        if(mPath!=null) {
+            ArrayList<String> paths = new ArrayList<>();
+            for(FilePathMold filePathMold:mPath){
+                paths.add(filePathMold.getPath());
+            }
+            try {
+                DelegateResources.newDelegateResources(RuntimeArgs.androidApplication, RuntimeArgs.delegateResources, paths);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private void install(List<FilePathMold> paths) {
         if (paths != null && paths.size() > 0) {
@@ -167,9 +186,7 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
             ArrayList<File> files = new ArrayList<>();
             files.clear();
             files.add(file);
-
             BundlePathLoader.installBundleDexs(mContext.getClassLoader(), new File(file.getParent()), files, isHost);
-
         }
     }
 
