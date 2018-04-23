@@ -54,7 +54,11 @@ dependencies {
 
     api project(':plugin:source')
     if (!solidMode) {
-       // compile project(':')
+        compile project(':test:activity')
+        compile project(':test:boardcast')
+        compile project(':test:contentprovider')
+        compile project(':test:service')
+
     }
 }
 

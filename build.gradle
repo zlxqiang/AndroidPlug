@@ -44,6 +44,6 @@ ext{
         sdkDir = properties.getProperty('sdk.dir')
     }
 
-    solidMode = true
+    solidMode = false
 
 }
