@@ -9,10 +9,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.swbyte.main.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
     // Example of a call to a native method
-    TextView tv = (TextView) findViewById(com.swbyte.main.R.id.sample_text);
+    TextView tv = (TextView) findViewById(R.id.sample_text);
     tv.setText(stringFromJNI());
     }
 

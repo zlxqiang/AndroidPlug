@@ -5,10 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.anthonycr.grant.PermissionsManager;
-import com.anthonycr.grant.PermissionsResultAction;
-import com.plugin.source.PluginSourceManager;
-
 /**
  * Created by admin on 2017/7/1.
  */

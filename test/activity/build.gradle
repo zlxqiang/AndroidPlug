@@ -42,13 +42,39 @@
 if (solidMode) {
     apply plugin: 'com.android.application'
     project.ext {
-        packageName = 'com.gstd.ssms.plugin'
+        packageName = 'com.swbyte.activity'
         apk = packageName.replace('.', '_')
-        apkName = apk+'_cl：1_v：1'
+        apkName = apk + '_cl：1_v：1'
     }
     apply from: '../../sub-project-build.gradle'
-}else{
+} else {
     apply plugin: 'com.android.library'
+}
+
+android {
+
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-fexceptions"
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
 }
 
 

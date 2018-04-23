@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ApkModules>
 
-    <Module  packageName="ctrip.android.demo1" resourceId="0x31"/>
+    <Module  packageName="com.swbyte.activity" resourceId="0x31"/>
 
-    <Module  packageName="ctrip.android.demo2" resourceId="0x36"/>
+    <Module  packageName="com.swbyte.boardcast" resourceId="0x36"/>
 
+    <Module  packageName="com.swbyte.contentprovider" resourceId="0x38"/>
 
+    <Module  packageName="com.swbyte.service" resourceId="0x39"/>
 
 </ApkModules>

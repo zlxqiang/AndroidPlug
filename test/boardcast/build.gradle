@@ -1,10 +1,21 @@
-apply plugin: 'com.android.application'
+if (solidMode) {
+    apply plugin: 'com.android.application'
+    project.ext {
+        packageName = 'com.swbyte.contentprovider'
+        apk = packageName.replace('.', '_')
+        apkName = apk + '_cl：1_v：1'
+    }
+    apply from: '../../sub-project-build.gradle'
+} else {
+    apply plugin: 'com.android.library'
+}
 
 android {
+
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
+
     defaultConfig {
-        applicationId "com.swbyte.boardcast"
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
@@ -16,17 +27,13 @@ android {
             }
         }
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
         }
     }
+
 }
 
 

@@ -59,13 +59,6 @@ task init << {
     new File(buildDir, 'generated/source/aidl/release').mkdir()
 }
 
-//清除build产出物
-//task clean(type: Delete)<<{
-//    delete buildDir
-//    delete "${rootDir}/build-outputs/${apkName}-mapping.txt"
-//    delete "${rootDir}/build-outputs/${apkName}.so"
-//}
-
 task aaptReleasePlugin(type: Exec, dependsOn: 'init') {
 
     inputs.file "$sdk.androidJar"
@@ -89,7 +82,7 @@ task aaptReleasePlugin(type: Exec, dependsOn: 'init') {
             resourceId = module.@resourceId
             println "find packageName: " + module.@packageName + " ,resourceId:" + resourceId
         } else {
-            println "----------------not font---------------"
+            println "----------------not font---------------"+module.@packageName
         }
     }
     def argv = []
@@ -128,8 +121,8 @@ task aaptReleasePlugin(type: Exec, dependsOn: 'init') {
 }
 
 
-task copyReleaseOutputsApk(type:Copy){
-    from ("$buildDir/outputs/apk/${project.name}-release-unsigned.apk") {
+task copyReleaseOutputsApk(type: Copy) {
+    from("$buildDir/outputs/apk/${project.name}-release-unsigned.apk") {
         rename "${project.name}-release-unsigned.apk", "${apkName}.so"
     }
     into new File(rootDir, 'build-outputs')
@@ -147,4 +140,14 @@ afterEvaluate {
             copyReleaseOutputsApk.execute();
         }
     }
+}
+
+/**
+ * 执行build.gralde前
+ */
+beforeEvaluate {
+    //清除build产出物
+    delete buildDir
+    delete "${rootDir}/build-outputs/${apkName}-mapping.txt"
+    delete "${rootDir}/build-outputs/${apkName}.so"
 }
