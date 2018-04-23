@@ -11,7 +11,7 @@ import android.os.Bundle;
 
 public class AppApplication extends Application implements Application.ActivityLifecycleCallbacks{
 
-    public static Context mContext;
+    public static Application mContext;
 
     @Override
     public void onCreate() {
