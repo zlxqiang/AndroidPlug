@@ -1,9 +1,9 @@
 if (solidMode) {
     apply plugin: 'com.android.application'
     project.ext {
-        packageName = 'com.swbyte.contentprovider'
+        packageName = 'com.swbyte.boardcast'
         apk = packageName.replace('.', '_')
-        apkName = apk + '_cl：1_v：1'
+        apkName = apk + '_cl-1_v-1'
     }
     apply from: '../../sub-project-build.gradle'
 } else {

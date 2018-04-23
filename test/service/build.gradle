@@ -4,7 +4,7 @@ if (solidMode) {
     project.ext {
         packageName = 'com.swbyte.service'
         apk = packageName.replace('.', '_')
-        apkName = apk + '_cl：1_v：1'
+        apkName = apk + '_cl-1_v-1'
     }
     apply from: '../../sub-project-build.gradle'
 } else {

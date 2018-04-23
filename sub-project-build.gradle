@@ -82,7 +82,7 @@ task aaptReleasePlugin(type: Exec, dependsOn: 'init') {
             resourceId = module.@resourceId
             println "find packageName: " + module.@packageName + " ,resourceId:" + resourceId
         } else {
-            println "----------------not font---------------"+module.@packageName
+            println "----------------not font---------------" + module.@packageName
         }
     }
     def argv = []
@@ -130,13 +130,13 @@ task copyReleaseOutputsApk(type: Copy) {
 
 afterEvaluate {
     tasks.getByName('compileReleaseJavaWithJavac') {
-        it.doFirst {
+        it.doLast {
             println 'aaptReleasePlugin -------------------'
             aaptReleasePlugin.execute()
         }
     }
     tasks.getByName("assembleRelease") {
-        it.doFirst {
+        it.doLast {
             copyReleaseOutputsApk.execute();
         }
     }
@@ -147,7 +147,7 @@ afterEvaluate {
  */
 beforeEvaluate {
     //清除build产出物
-    delete buildDir
-    delete "${rootDir}/build-outputs/${apkName}-mapping.txt"
-    delete "${rootDir}/build-outputs/${apkName}.so"
+    //delete buildDir
+    //delete "${rootDir}/build-outputs/${apkName}-mapping.txt"
+    //delete "${rootDir}/build-outputs/${apkName}.so"
 }

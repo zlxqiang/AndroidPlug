@@ -76,18 +76,19 @@ task copyReleaseOutputs(type:Copy){
 
 task outputscl{
     delete buildDir
-   // delete "${rootDir}/build-outputs/demo-base-release.apk"
-    delete "${rootDir}/build-outputs/AndroidManifest.xml"
-    delete "${rootDir}/build-outputs/demo-base-mapping.txt"
-    delete "${rootDir}/build-outputs/demo-mapping-final.txt"
-    delete "${rootDir}/build-outputs/demo-release-reloaded.apk"
-    delete "${rootDir}/build-outputs/demo-release-resigned.apk"
-    delete "${rootDir}/build-outputs/demo-release-repacked.apk"
-    delete "${rootDir}/build-outputs/demo-release-final.apk"
+//    delete "${rootDir}/build-outputs/demo-base-release.apk"
+//    delete "${rootDir}/build-outputs/AndroidManifest.xml"
+//    delete "${rootDir}/build-outputs/demo-base-mapping.txt"
+//    delete "${rootDir}/build-outputs/demo-mapping-final.txt"
+//    delete "${rootDir}/build-outputs/demo-release-reloaded.apk"
+//    delete "${rootDir}/build-outputs/demo-release-resigned.apk"
+//    delete "${rootDir}/build-outputs/demo-release-repacked.apk"
+//    delete "${rootDir}/build-outputs/demo-release-final.apk"
 }
 
 
 import org.apache.tools.ant.taskdefs.condition.Os
+
 
 def getZipAlignPath(){
     def zipAlignPath = "${android.sdkDirectory}/build-tools/${android.buildToolsVersion}/zipalign"
@@ -124,6 +125,7 @@ def repackApk(originApk, targetApk){
             println "${entryIn.name} is a directory"
         }
         else{
+            println "${entryIn.name}......";
             def entryOut = new ZipEntry(entryIn.name)
             def dotPos = entryIn.name.lastIndexOf('.')
             def ext = (dotPos >= 0) ? entryIn.name.substring(dotPos) : ""
