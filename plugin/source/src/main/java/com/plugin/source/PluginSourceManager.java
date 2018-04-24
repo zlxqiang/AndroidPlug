@@ -105,18 +105,27 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
                     //assert目录读取文件
                     Enumeration entries = zipFile.entries();
                     while (entries.hasMoreElements()) {
-                        String name = ((ZipEntry) entries.nextElement()).getName();
-                        if (name.startsWith("") && name.endsWith(".so")) {
+                        String path = ((ZipEntry) entries.nextElement()).getName();
+                        if (path.startsWith("") && path.endsWith(".so")) {
                             //存储
+                            String fileName ="bundle.zip";
+                            String versionName = path.substring(path.lastIndexOf("cl-")+3, path.lastIndexOf("_v-"));
+                            String versionCode = path.substring(path.lastIndexOf("_v-")+3, path.lastIndexOf("."));
+
                             String md5 = System.currentTimeMillis() + "";
-                            File file = new File(FilePath.makeDBFilePath(md5), name);
-                            APKUtil.copyInputStreamToFile(zipFile.getInputStream(zipFile.getEntry("assert/btns" + name)), file);
+                          //  File file = new File(FilePath.getVersionDirPath(versionName,versionCode));
+                            File file = new File(FilePath.makeDBFilePath(md5),fileName);
+                            if(!file.exists()){
+                                if(!file.getParentFile().exists()){
+                                    file.getParentFile().mkdirs();
+                                }
+                                file.createNewFile();
+                            }
+                            APKUtil.copyInputStreamToFile(zipFile.getInputStream(zipFile.getEntry(path)), file);
                             ServerMolde.PluginMolde pluginMode = new ServerMolde.PluginMolde();
                             pluginMode.set_id(md5);
                             pluginMode.setFile_md5(md5);
-                            int versionCode = mContext.getPackageManager().
-                                    getPackageInfo(mContext.getPackageName(), 0).versionCode;
-                            pluginMode.setVersion(versionCode);
+                            pluginMode.setVersion(Integer.valueOf(versionCode));
                             SqlitHelper.getInstance(mContext).insert(0, pluginMode, file.getPath());
                             //安装
                             install(file, false);

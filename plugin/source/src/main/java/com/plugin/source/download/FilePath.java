@@ -80,7 +80,7 @@ public class FilePath {
 
 
     public static String getVersionDirPath(String versionName,String versionCode) {
-        String vertionPath = mBasePath + "/" + versionName+"_"+versionCode;
+        String vertionPath = getInstallDirPath() + "/" + versionName+"_"+versionCode;
         File file=new File(vertionPath);
         if (!file.exists() || file.isFile()) {
             new File(vertionPath).mkdirs();

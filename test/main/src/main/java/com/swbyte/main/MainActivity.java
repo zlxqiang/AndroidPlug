@@ -2,6 +2,7 @@ package com.swbyte.main;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -38,6 +39,19 @@ public class MainActivity extends Activity {
                 new PluginSourceManager(AppApplication.mContext);
             }
         });
+
+        findViewById(R.id.activityClick).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(getApplicationContext(), Class.forName("com.swbyte.activity.MainActivity")));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
 
     /**
@@ -47,6 +61,6 @@ public class MainActivity extends Activity {
 
     // Used to load the 'native-lib' library on application startup.
     static {
-        System.loadLibrary("native-lib");
+       // System.loadLibrary("mnative-lib");
     }
 }

@@ -9,11 +9,11 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+       // setContentView(R.layout.activity_main);
 
     // Example of a call to a native method
-    TextView tv = (TextView) findViewById(R.id.sample_text);
-    tv.setText(stringFromJNI());
+   // TextView tv = (TextView) findViewById(R.id.sample_text);
+   // tv.setText(stringFromJNI());
     }
 
     /**
@@ -24,6 +24,6 @@ public class MainActivity extends Activity {
 
     // Used to load the 'native-lib' library on application startup.
     static {
-        System.loadLibrary("native-lib");
+       // System.loadLibrary("native-lib");
     }
 }

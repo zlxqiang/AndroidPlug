@@ -18,7 +18,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "ctrip.android.sample"
+        applicationId "com.swbyte.main"
         versionCode 1
         versionName "1.0"
         minSdkVersion 14
@@ -77,17 +77,30 @@ task copyReleaseOutputs(type:Copy){
     into new File(rootDir, 'build-outputs')
 }
 
+//打包后产出物复制到build-outputs目录。apk、manifest、mapping
+task copyDebugOutputs(type:Copy){
+    from ("$buildDir/outputs/apk/debug/${project.name}-debug.apk") {
+        rename "${project.name}-debug.apk", 'demo-base-release.apk'
+    }
+    from "$buildDir/intermediates/manifests/full/debug/AndroidManifest.xml"
+    from ("$buildDir/outputs/mapping/debug/mapping.txt") {
+        rename 'mapping.txt', 'demo-base-mapping.txt'
+    }
 
-task outputscl{
-    delete buildDir
-//    delete "${rootDir}/build-outputs/demo-base-release.apk"
+    into new File(rootDir, 'build-outputs')
+}
+
+
+task outputClear{
+ //   delete buildDir
+ //   delete "${rootDir}/build-outputs/demo-base-release.apk"
 //    delete "${rootDir}/build-outputs/AndroidManifest.xml"
 //    delete "${rootDir}/build-outputs/demo-base-mapping.txt"
-//    delete "${rootDir}/build-outputs/demo-mapping-final.txt"
-//    delete "${rootDir}/build-outputs/demo-release-reloaded.apk"
-//    delete "${rootDir}/build-outputs/demo-release-resigned.apk"
-//    delete "${rootDir}/build-outputs/demo-release-repacked.apk"
-//    delete "${rootDir}/build-outputs/demo-release-final.apk"
+    delete "${rootDir}/build-outputs/demo-mapping-final.txt"
+    delete "${rootDir}/build-outputs/demo-release-reloaded.apk"
+    delete "${rootDir}/build-outputs/demo-release-resigned.apk"
+    delete "${rootDir}/build-outputs/demo-release-repacked.apk"
+    delete "${rootDir}/build-outputs/demo-release-final.apk"
 }
 
 
@@ -208,13 +221,16 @@ afterEvaluate {
                 copyReleaseOutputs.execute()
             }
         }
-    }catch (Exception e){
+
         //打包完成执行copy操作
         tasks.getByName("assembleDebug"){
             it.doLast{
-                copyReleaseOutputs.execute()
+                copyDebugOutputs.execute()
             }
         }
+
+    }catch (Exception e){
+
     }
 
 }
@@ -223,7 +239,7 @@ afterEvaluate {
 //base apk的assets中填充各子apk
 //输入：Ctrip-base-release.apk
 //输出：Ctrip-release-reloaded.apk
-task reload(type:Zip){
+task reload(type:Zip,dependsOn: 'outputClear'){
     inputs.file  "$rootDir/build-outputs/demo-base-release.apk"
     inputs.files fileTree(new File(rootDir,'build-outputs')).include('*.so')
     outputs.file "$rootDir/build-outputs/demo-release-reloaded.apk"
