@@ -7,6 +7,6 @@
 
     <Module  packageName="com.swbyte.contentprovider" resourceId="0x38"/>
 
-    <Module  packageName="com.swbyte.service" resourceId="0x39"/>
+    <Module  packageName="com.swbyte.service" resourceId="0x40"/>
 
 </ApkModules>

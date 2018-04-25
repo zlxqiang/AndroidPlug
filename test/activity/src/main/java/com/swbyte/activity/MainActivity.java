@@ -2,18 +2,19 @@ package com.swbyte.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.util.Log;
 
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_main);
+        Log.e("id","id="+R.layout.activity_activity+"2130968576");
+        setContentView(R.layout.activity_activity);
 
-    // Example of a call to a native method
-   // TextView tv = (TextView) findViewById(R.id.sample_text);
-   // tv.setText(stringFromJNI());
+        // Example of a call to a native method
+        // TextView tv = (TextView) findViewById(R.id.sample_text);
+        // tv.setText(stringFromJNI());
     }
 
     /**
@@ -24,6 +25,6 @@ public class MainActivity extends Activity {
 
     // Used to load the 'native-lib' library on application startup.
     static {
-       // System.loadLibrary("native-lib");
+        // System.loadLibrary("native-lib");
     }
 }

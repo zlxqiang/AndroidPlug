@@ -6,7 +6,7 @@ if (solidMode) {
         apk = packageName.replace('.', '_')
         apkName = apk + '_cl-1_v-1'
     }
-    apply from: '../../sub-project-build.gradle'
+  //  apply from: '../../sub-project-build.gradle'
 } else {
     apply plugin: 'com.android.library'
 }
@@ -39,10 +39,10 @@ android {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
 }
