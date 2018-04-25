@@ -31,4 +31,10 @@
         android:id="@+id/activityClick"
         android:text="activity"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contentPrivderClick"
+        android:text="privder"/>
+
 </LinearLayout>

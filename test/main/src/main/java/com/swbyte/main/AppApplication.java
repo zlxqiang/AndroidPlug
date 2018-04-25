@@ -16,11 +16,16 @@ public class AppApplication extends Application {
     public static Application mContext;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
+        new PluginSourceManager(this);
         mContext=this;
-        new PluginSourceManager(AppApplication.mContext);
-
         CrashHandler.getInstance().init(this);//初始化全局异常管理
     }
 

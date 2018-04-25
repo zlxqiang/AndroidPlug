@@ -28,6 +28,7 @@ import com.plugin.classloader.loader.BundlePathLoader;
 
 import ctrip.android.bundle.hack.AndroidHack;
 import ctrip.android.bundle.hack.SysHacks;
+import ctrip.android.bundle.runtime.ContentProviderHook;
 import ctrip.android.bundle.runtime.DelegateResources;
 import ctrip.android.bundle.runtime.InstrumentationHook;
 import ctrip.android.bundle.runtime.RuntimeArgs;
@@ -192,10 +193,16 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
     private void install(File file, boolean isHost) throws IllegalAccessException, InstantiationException, IOException, NoSuchMethodException, InvocationTargetException, NoSuchFieldException {
 
         if (file.exists() && file.isFile()) {
-            ArrayList<File> files = new ArrayList<>();
-            files.clear();
-            files.add(file);
-            BundlePathLoader.installBundleDexs(mContext.getClassLoader(), new File(file.getParent()), files, isHost);
+            try {
+                ArrayList<File> files = new ArrayList<>();
+                files.clear();
+                files.add(file);
+                BundlePathLoader.installBundleDexs(mContext.getClassLoader(), new File(file.getParent()), files, isHost);
+                //必须在下面
+                ContentProviderHook.installProviders(mContext,file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -221,6 +228,7 @@ public class PluginSourceManager extends NetworkCallback<ServerMolde> {
             mContext.startService(intent);
         }
     }
+
 
 
 }

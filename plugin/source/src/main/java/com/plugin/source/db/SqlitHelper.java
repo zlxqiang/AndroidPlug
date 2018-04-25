@@ -154,4 +154,7 @@ public class SqlitHelper {
 
     }
 
+    public DBHelper getDBHelper() {
+        return mDB;
+    }
 }

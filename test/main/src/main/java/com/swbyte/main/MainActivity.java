@@ -59,7 +59,20 @@ public class MainActivity extends Activity {
                 }
             }
         });
-
+        findViewById(R.id.contentPrivderClick).setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
+            @Override
+            public void onClick(View v) {
+                try {
+//                    View view = LayoutInflater.from(MainActivity.this).inflate(0x7f040000, null);
+                    //                   if(view!=null) {
+                    startActivity(new Intent(getApplicationContext(), Class.forName("com.swbyte.contentprovider.MainActivity")));
+//                    }
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 

@@ -6,7 +6,7 @@ if (solidMode) {
         apk = packageName.replace('.', '_')
         apkName = apk + '_cl-1_v-1'
     }
-  //  apply from: '../../sub-project-build.gradle'
+    apply from: '../../sub-project-build.gradle'
 } else {
     apply plugin: 'com.android.library'
 }
@@ -45,4 +45,5 @@ dependencies {
     })
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
+    implementation project(':plugin:source')
 }

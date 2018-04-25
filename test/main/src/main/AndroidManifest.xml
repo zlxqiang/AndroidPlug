@@ -27,6 +27,12 @@
 
         <activity android:name="com.swbyte.activity.MainActivity" />
 
+        <activity android:name="com.swbyte.contentprovider.MainActivity" />
+
+        <!--<provider-->
+            <!--android:authorities="com.swbyte.contentprovider"-->
+            <!--android:name="com.swbyte.contentprovider.CourseContentProvider"/>-->
+
     </application>
 
 </manifest>
