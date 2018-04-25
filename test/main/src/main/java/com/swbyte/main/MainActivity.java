@@ -63,13 +63,9 @@ public class MainActivity extends Activity {
 
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
 
-    // Used to load the 'native-lib' library on application startup.
-    static {
-       // System.loadLibrary("mnative-lib");
     }
 }
