@@ -134,7 +134,7 @@ afterEvaluate {
 
     tasks.getByName('compileReleaseJavaWithJavac') {
         it.doFirst {
-            println 'aaptReleasePlugin -------------------'
+            println 'aaptReleasePlugin running......'
             aaptRelease.execute()
         }
     }
