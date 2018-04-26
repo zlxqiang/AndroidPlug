@@ -39,7 +39,7 @@ task init() {
 
     buildDir.mkdirs()
 
-    //  new File(buildDir, 'gen/r').mkdirs()
+      new File(buildDir, 'gen/r').mkdirs()
 
     new File(buildDir, 'intermediates').mkdirs()
 
@@ -112,15 +112,16 @@ task aaptRelease(type: Exec) {
     argv << "${packageName}"
     argv << '-0'    //指定哪些后缀名不会被压缩
     argv << 'apk'
-    argv << '--public-R-path'
-    argv << "${rootDir}/test/main/build/generated/source/r/release/com/swbyte/main/R.java"
+   // argv << '--public-R-path' //不使用base R
+   // argv << "${rootDir}/test/main/build/generated/source/r/release/com/swbyte/main/R.java"
     argv << '--apk-module'
     argv << "$resourceId"
 
     args = argv
 
-}
 
+
+}
 
 
 task copyReleaseOutputsApk(type: Copy, dependsOn: 'bundleRelease') {
@@ -132,12 +133,14 @@ task copyReleaseOutputsApk(type: Copy, dependsOn: 'bundleRelease') {
 
 afterEvaluate {
 
+    //在生成class文件之前
     tasks.getByName('compileReleaseJavaWithJavac') {
         it.doFirst {
             println 'aaptReleasePlugin running......'
             aaptRelease.execute()
         }
     }
+
     tasks.getByName("assembleRelease") {
         it.doLast {
             copyReleaseOutputsApk.execute();

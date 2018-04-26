@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
         Cursor cursor = getContentResolver().query(CourseContentProvider.CONTENT_URI, new String[]{"*"}, TableFilePath.enable + "=?", new String[]{"0"}, null);
         if (cursor != null && cursor.getCount() > 0) {
             List<FilePathMold> pathMolds = new ArrayList<>();
+            String paths="";
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(cursor.getColumnIndex(TableFilePath.id));
                 String _id=cursor.getString(cursor.getColumnIndex(TableFilePath._id));
@@ -31,8 +32,9 @@ public class MainActivity extends Activity {
                 int version = cursor.getInt(cursor.getColumnIndex(TableFilePath.version));
                 int enalbe = cursor.getInt(cursor.getColumnIndex(TableFilePath.enable));
                 pathMolds.add(new FilePathMold(id,_id, code, path, version, enalbe));
+                paths=paths+"\n"+path;
             }
-            tv.setText("当前数据："+pathMolds.toString());
+            tv.setText("当前数据："+paths);
         }
 
     }

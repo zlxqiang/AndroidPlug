@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/test/contentprovider" />
             <option value="$PROJECT_DIR$/test/main" />
             <option value="$PROJECT_DIR$/test/service" />
+            <option value="$PROJECT_DIR$/test/zlibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

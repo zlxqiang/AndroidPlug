@@ -17,6 +17,7 @@
       <module fileurl="file://$PROJECT_DIR$/test/service/service.iml" filepath="$PROJECT_DIR$/test/service/service.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugin/source/source.iml" filepath="$PROJECT_DIR$/plugin/source/source.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/zlibrary/zlibrary.iml" filepath="$PROJECT_DIR$/test/zlibrary/zlibrary.iml" />
     </modules>
   </component>
 </project>

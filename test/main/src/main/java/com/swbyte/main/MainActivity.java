@@ -13,7 +13,7 @@ import com.anthonycr.grant.PermissionsManager;
 import com.anthonycr.grant.PermissionsResultAction;
 import com.plugin.source.PluginSourceManager;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,50 +35,47 @@ public class MainActivity extends Activity {
                         // Notify the user that you need all of the permissions
                     }
                 });
-
-
-
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new PluginSourceManager(AppApplication.mContext);
-            }
-        });
-
-        findViewById(R.id.activityClick).setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceType")
-            @Override
-            public void onClick(View v) {
-                try {
-//                    View view = LayoutInflater.from(MainActivity.this).inflate(0x7f040000, null);
- //                   if(view!=null) {
-                        startActivity(new Intent(getApplicationContext(), Class.forName("com.swbyte.activity.MainActivity")));
-//                    }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        findViewById(R.id.contentPrivderClick).setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceType")
-            @Override
-            public void onClick(View v) {
-                try {
-//                    View view = LayoutInflater.from(MainActivity.this).inflate(0x7f040000, null);
-                    //                   if(view!=null) {
-                    startActivity(new Intent(getApplicationContext(), Class.forName("com.swbyte.contentprovider.MainActivity")));
-//                    }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
+        findViewById(R.id.btn).setOnClickListener(this);
+        findViewById(R.id.activityClick).setOnClickListener(this);
+        findViewById(R.id.contentPrivderClick).setOnClickListener(this);
+        findViewById(R.id.contentPrivderClick).setOnClickListener(this);
+        findViewById(R.id.serviceClick).setOnClickListener(this);
     }
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn:
+                new PluginSourceManager(AppApplication.mContext);
+                break;
+            case R.id.activityClick:
+                try {
+                    startActivity(new Intent(getApplicationContext(), Class.forName("com.swbyte.activity.MainActivity")));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.contentPrivderClick:
+                try {
+                    startActivity(new Intent(getApplicationContext(), Class.forName("com.swbyte.contentprovider.MainActivity")));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.serviceClick:
+                try {
+                    startActivity(new Intent(getApplicationContext(), Class.forName("com.swbyte.service.MainActivity")));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+        }
     }
 }

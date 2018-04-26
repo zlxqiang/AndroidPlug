@@ -12,7 +12,9 @@ Use:
 
 功能：
   支持Activity
-
+  支持ContentProvider
+  支持BoardCastReciever
+  支持Service
 
 问题：
  1.aapt 自定义控件的命名空间不支持
